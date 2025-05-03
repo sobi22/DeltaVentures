@@ -1,0 +1,64 @@
+{
+  "userFields": [
+    {
+      "id": "1",
+      "fieldName": "firstName",
+      "fieldType": "string",
+      "condition": "required"
+    },
+    {
+      "id": "2",
+      "fieldName": "lastName",
+      "fieldType": "string",
+      "condition": "required"
+    },
+    {
+      "id": "3",
+      "fieldName": "phoneNumber",
+      "fieldType": "number",
+      "condition": "required"
+    },
+    {
+      "id": "4",
+      "fieldName": "email",
+      "fieldType": "string",
+      "condition": "required"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "firstName": "Sobi",
+      "lastName": "C",
+      "email": "sobi@gmail.com",
+      "phoneNumber": 9567777777
+    },
+    {
+      "id": "3",
+      "firstName": "Britto",
+      "lastName": "S",
+      "email": "britto@gmail.com",
+      "phoneNumber": 9567775677
+    },
+    {
+      "id": "33e8",
+      "firstName": "Britto",
+      "lastName": "S",
+      "email": "britto@gmail.com",
+      "phoneNumber": 9567775677
+    },
+    {
+      "id": "e6ac",
+      "firstName": "Britto",
+      "lastName": "S",
+      "email": "britto@gmail.com",
+      "phoneNumber": 9567775677
+    },
+    {
+      "id": "78f5"
+    },
+    {
+      "id": "0c4e"
+    }
+  ]
+}

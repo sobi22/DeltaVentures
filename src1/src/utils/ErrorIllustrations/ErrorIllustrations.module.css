@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  height: 50vh;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 600px) {
+  .container {
+    flex-direction: row;
+    height: 60vh;
+    max-width: 900px;
+    margin: auto;
+  }
+}
+
+.subText {
+  text-align: center;
+  max-width: 90%;
+  white-space: initial;
+  color: var(--text-secondary);
+}
+
+@media screen and (min-width: 600px) {
+  .subText {
+    max-width: 100%;
+    text-align: left;
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "firstName": "Sobi",
+      "lastName": "C",
+      "email": "sobi@gmail.com",
+      "phoneNumber": 9567777777
+    },
+    {
+      "id": "3"
+    },
+    {
+      "id": "6cb7"
+    },
+    {
+      "id": "4278"
+    }
+  ],
+  "userFields": [
+    {
+      "id": "1",
+      "fieldName": "firstName",
+      "fieldType": "string",
+      "condition": "required",
+      "status": "display"
+    },
+    {
+      "id": "2",
+      "fieldName": "lastName",
+      "fieldType": "string",
+      "condition": "required",
+      "status": "display"
+    },
+    {
+      "id": "3",
+      "fieldName": "phoneNumber",
+      "fieldType": "number",
+      "condition": "required",
+      "status": "display"
+    },
+    {
+      "id": "4",
+      "fieldName": "email",
+      "fieldType": "string",
+      "condition": "required",
+      "status": "display"
+    }
+  ]
+}
