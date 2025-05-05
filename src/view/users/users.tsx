@@ -16,10 +16,16 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';// Add b
 import {  
   useGetUsersMutation,
   useDeleteUserMutation } from '../../api/userAPI';
+import { useSnackbar } from '../../utils/snackbar';
+import ConfirmationDialog from './confirmDialogue';
 
 
 const Users=()=>{
+  const {openSnackbar} =useSnackbar();
   const [open, setOpen] = useState(false);
+  const [confirmOpen, setconfirmOpen] = useState(false);
+  const [confirmStatus,setConfirmStatus]=useState(false)
+  const [selectedId,setSelectedId] =useState<any>('');
   const [rows,setRows] =useState<User|any>([]);
   const [rowCount,setRowCount]=useState(3);
   const [updateUserData,setUpdateUserData] = useState<User|any>({})
@@ -31,7 +37,7 @@ const Users=()=>{
   });
   useEffect(()=>{
     fetchData(paginationModel.page, paginationModel.pageSize)
-  },[paginationModel])
+  },[paginationModel,selectedId])
 
   const fetchData = async (page: number, size: number) => {
     // setRowsFilterBySearch([]);
@@ -60,10 +66,30 @@ const Users=()=>{
   
   const handleDeleteclick = async (row: any) => {
       console.log(row.id)
+      setSelectedId(row.id);
+      setconfirmOpen(true);
       const response:any = await DeleteUser(row.id);
       console.log(response);
       setUpdateUserData(row);
   };
+  const Deleteclick = async () => {
+  
+    const response:any = await DeleteUser(selectedId);
+    if(response){
+      openSnackbar('Deleted Successfully','success');
+    }else{
+      openSnackbar('Error while delete','error');
+    }
+    setSelectedId('');
+};
+const handleClickDialog =(status:boolean) =>{
+  console.log(status,"status");
+  if(status==true){
+    Deleteclick();
+  }
+  setSelectedId('');
+  setconfirmOpen(false);
+}
   const handleClose = ()=>{
     setUpdateUserData({})
     setOpen(false);
@@ -176,6 +202,7 @@ const Users=()=>{
     {open && 
       <CreateUser  handleClose={handleClose} updateUserData={updateUserData} />
     }
+    { confirmOpen && <ConfirmationDialog confirmStatus={confirmStatus} confirmOpen={confirmOpen} handleClickDialog={handleClickDialog}/>}
   </Box>
   );
 }

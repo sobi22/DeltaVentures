@@ -14,7 +14,9 @@ export const ofsApi = createApi({
     prepareHeaders: (headers, { getState }) => {
       // Set headers here
       const state = getState();
-      const { accessToken } = (state as AppState)?.user?.data;
+      // const { accessToken } = (state as AppState)?.user?.data;
+      const accessToken = 'Vfgfggg56666666666666';
+
       // If we have a token set in state, let's assume that we should be passing it.
       if (accessToken) {
         headers.set('Authorization', `Bearer ${accessToken}`);

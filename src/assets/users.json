@@ -8,13 +8,46 @@
       "phoneNumber": 9567777777
     },
     {
-      "id": "3"
+      "id": "f72d",
+      "firstName": "SobiTT",
+      "lastName": "C",
+      "email": "sobi@gmail.com",
+      "phoneNumber": 9567777777
     },
     {
-      "id": "6cb7"
+      "id": "678a",
+      "phoneNumber": "6678956789",
+      "email": "bbb@gmail.com",
+      "firstName": "hdhj",
+      "lastName": "fj"
     },
     {
-      "id": "4278"
+      "id": "6e2f",
+      "firstName": "Alwin",
+      "lastName": "Y",
+      "phoneNumber": "5678345679",
+      "email": "csss@gmail.com"
+    },
+    {
+      "id": "0bf6",
+      "firstName": "Jenish",
+      "lastName": "TT",
+      "phoneNumber": "3456789678",
+      "email": "cdd@gmail.com"
+    },
+    {
+      "id": "35d4",
+      "firstName": "Jenishg",
+      "lastName": "T",
+      "phoneNumber": "3456789668",
+      "email": "cdd@gmajil.com"
+    },
+    {
+      "id": "8225",
+      "firstName": "Jenish",
+      "lastName": "T",
+      "phoneNumber": "4567893456",
+      "email": "cdf@gmail.com"
     }
   ],
   "userFields": [
@@ -45,6 +78,20 @@
       "fieldType": "string",
       "condition": "required",
       "status": "display"
+    },
+    {
+      "id": "5",
+      "fieldName": "DateOfBirth",
+      "fieldType": "string",
+      "condition": "required",
+      "status": "hide"
+    },
+    {
+      "id": "6",
+      "fieldName": "Address",
+      "fieldType": "string",
+      "condition": "required",
+      "status": "hide"
     }
   ]
 }

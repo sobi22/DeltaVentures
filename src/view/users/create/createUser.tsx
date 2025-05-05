@@ -6,6 +6,10 @@ import {
   CircularProgress,
   IconButton,
   Typography,
+  FormControl, 
+  InputLabel, 
+  Select,
+  MenuItem
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import  Grid from '@mui/material/Grid';
@@ -20,6 +24,7 @@ import {
   useCreateUserMutation,
   useUpdateUserMutation,
   } from '../../../api/userAPI';
+import { Preview } from '@mui/icons-material';
  
 interface CreateUserProps {
   updateUserData: User;
@@ -34,6 +39,7 @@ const CustomerTextField: React.FC<CreateUserProps> = ({ handleClose, updateUserD
   const [getFormFields] = useGetUserFieldsMutation();
   const [CreateUser] = useCreateUserMutation();
   const [UpdateUser] = useUpdateUserMutation();
+  const [selectedAdditionalField,setSelectedAdditionalField] =useState<number>(0);
   const isEmpty = (obj: object): boolean => Object.keys(obj).length === 0;
   const [userData, setUserData] = useState<any>({
     id:0,
@@ -53,8 +59,7 @@ const CustomerTextField: React.FC<CreateUserProps> = ({ handleClose, updateUserD
     console.log(response);
     let formfieldss=response?.data;
     if ('data' in response) {
-      setformFields(formfieldss.filter((fields:any)=>(fields.status=='display')));
-      setadditionalFormFields(formfieldss.filter((fields:any)=>(fields.status!='display')));
+      setformFields(formfieldss);
     } else {
       console.error('Error fetching data:', response.error);
     }
@@ -70,7 +75,7 @@ const CustomerTextField: React.FC<CreateUserProps> = ({ handleClose, updateUserD
   }, [updateUserData]);
 
   
-  const handleField = (fieldName: keyof User, value: string) => {
+  const handleField = (fieldName: any, value: string) => {
     console.log(userData,fieldName,value);
     setUserData((prevUserData:any) => ({
       ...prevUserData,
@@ -91,47 +96,55 @@ const CustomerTextField: React.FC<CreateUserProps> = ({ handleClose, updateUserD
     errors_["email"] = !userData?.email ? 'The fied is required' : !validateEmail(userData?.email) ? "please Enter email in correct format" : "";
     setValidationData(errors_);
     let errorStatusData =(Object.values(errors_).find((_) => _)) ? true : false;
-  
+
     try {
       if (errorStatusData == false) {
         if (isEmpty(updateUserData)) {
           console.log(userData,"userData");
-           const response = await CreateUser({
-             userCreate: userData,
-           });
-           if ('data' in response) {
-             openSnackbar('User created successfully', 'success');
-            handleClose();
-          } else {
-            const errorData = response.error as any;
-               if (errorData.data && typeof errorData.data === 'object') {
-              const errorMessage = errorData.data.message;
-              openSnackbar(errorMessage ?? 'An error occurred', 'error');
-            } else {
-              openSnackbar('An error occurred', 'error');
-            }
-          }
+          const response=fetch("http://localhost:3030/users", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+          })
+          .then(response=>{
+            console.log(response.status)
+            if (response.status==201) {
+              openSnackbar('User created successfully', 'success');
+             handleClose();
+           } else {
+             openSnackbar('An error occurred', 'error');
+           }
+          })
+          //   const response = await CreateUser({
+          //    userCreate: userData,
+          //  });
         } else {
-          const response = await UpdateUser({
-            userUpdate: userData,
-            id:userData.id
-          });
-
-          if ('data' in response) {
-            openSnackbar('User detail updated successfully', 'success');
-            handleClose();
-          } else {
-            const errorData = response.error as any;
-            if (errorData.data && typeof errorData.data === 'object') {
-              const errorMessage = errorData.data.message;
-              openSnackbar(errorMessage ?? 'An error occurred', 'error');
+          console.log("update")
+          // const response = await UpdateUser({
+          //   userUpdate: userData,
+          //   id:userData.id
+          // });
+          const response=fetch(`http://localhost:3030/users/${userData?.id}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+          }).then((response)=>{
+            console.log(response.status)
+            if (response.status==200) {
+              openSnackbar('User detail updated successfully', 'success');
+              handleClose();
             } else {
               openSnackbar('An error occurred', 'error');
             }
-          }
+          })
+          
         }
       }
-    } finally {
+    }finally {
       setLoadingScreen(false);
     }
   };
@@ -147,9 +160,26 @@ const CustomerTextField: React.FC<CreateUserProps> = ({ handleClose, updateUserD
     handleClose();
   };
 
-  const validationPhoneNumber = () => {
-    return validationData.mobileNumber && !userData.phoneNumber ? 'phone  number is required' : 'phone number length must between 8 to 15';
-  };
+  const showAdditionalField=(value:any)=>{
+    console.log(value);
+    const updateFormFields= formFields.map((field:any,index:number)=>{
+      if(field.id==value){
+        return {
+          ...field,
+          status:'display'
+        } 
+      }else {
+        return {
+          ...field
+        }
+      }
+    })
+    setformFields(updateFormFields);
+    // setformFields((prev:any)=>{prev.id!=value ? prev : prev['status']='display'})
+  }
+  // const getFieldValue =(fieldName:string)=>{
+  //     return userData[fieldName];
+  // }
   return (
    <Box  sx={{ height: '100%',width: '97%',position:'relative', top:0,p: 2 ,overflow:"auto",backgroundColor: 'rgba(255, 255, 255, 0.93)',}} >
       <Backdrop sx={(theme) => ({ zIndex: theme.zIndex.drawer + 1 })} open={loadingScreen}>
@@ -167,6 +197,7 @@ const CustomerTextField: React.FC<CreateUserProps> = ({ handleClose, updateUserD
           <Typography variant="h5" sx={{ fontWeight: '700' }}>
             {isEmpty(updateUserData)? 'Create User' :'Edit User'}
           </Typography>
+         
           <IconButton
             aria-label="close"
             onClick={trigerClose}
@@ -176,20 +207,21 @@ const CustomerTextField: React.FC<CreateUserProps> = ({ handleClose, updateUserD
           >
             <CloseIcon />
           </IconButton>
+           
         </Box>
         <Box>
           <Card variant="outlined" sx={{ display: 'flex' }} >
             <Grid container spacing={3} sx={{ p: 4 }}>
-             {formFields && formFields.map((field:any,index:number)=> (
+             {formFields && formFields.filter((fields:any)=>(fields.status=='display')).map((field:any,index:number)=> (
                 <Grid  item xs={12} sm={6} md={3} lg={3}>
                 <TextField
-                  //  key={index}
+                   key={index}
                    id="outlined-basic"
                    label={`${field?.fieldName}*`}
                    variant="outlined"
                    fullWidth
                    size="small"
-                   value={userData[field?.fieldName]}
+                   value={ userData[field?.fieldName]}
                    onChange={(e) => handleField(field?.fieldName, e.target.value)}
                    error={validationData[field?.fieldName] ? true : false}
                    helperText={validationData[field?.fieldName]}
@@ -197,7 +229,8 @@ const CustomerTextField: React.FC<CreateUserProps> = ({ handleClose, updateUserD
                </Grid>
              )
              )}
-             {/* <Grid item xs={12} sm={6} md={3} lg={3}>
+             {isEmpty(formFields) && (<>
+             <Grid item xs={12} sm={6} md={3} lg={3}>
                 <TextField
                    id="outlined-basic"
                    label="First Name *"
@@ -260,12 +293,31 @@ const CustomerTextField: React.FC<CreateUserProps> = ({ handleClose, updateUserD
                     error={validationData?.email ? true:false}
                     helperText={validationData?.email}
                   />
-               </Grid> */}
+               </Grid>
+               </>
+               )}
              </Grid>
            </Card>
 
         </Box>
-        <Box display={'flex'} gap={4}  sx={{justifyContent:"end", p:2}}>
+        <Box display={'flex'} gap={2}  sx={{justifyContent:"end", p:2}}>
+        <Box> <FormControl >
+              <InputLabel>Additional Fields</InputLabel>
+              <Select
+                // disabled={additionalFormFields.length == 0}
+                name="additionalField"
+                value={selectedAdditionalField}
+                label="AdditionalField"
+                size='medium'
+                sx={{width:'100px'}}
+                onChange={(e) => showAdditionalField( e.target.value )}
+                fullWidth
+              >
+                {formFields && formFields.filter((fields:any)=>(fields.status!='display')).map((additionalFormFields:any,aindex:number)=>(
+                     <MenuItem key={aindex} value={additionalFormFields.id}>{`${additionalFormFields.fieldName}`}</MenuItem>
+                ))}
+              </Select>
+            </FormControl></Box>
             <ColorButton onClick={() => handleSubmit()} variant="contained" color="primary">
                 {isEmpty(updateUserData) ? 'Submit' : 'Update'}
             </ColorButton>

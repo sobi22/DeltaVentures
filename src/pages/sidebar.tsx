@@ -120,11 +120,11 @@ import { AnyComponent } from 'styled-components/dist/types';
   const menuItems: MenuItem[] = [
     // { name: 'Dashboard', path: routes.ROOT, icon: <DashboardOutlined style={mainIconStyle} /> },
     
-    {
-      name: 'Profile',
-      path: routes.PROFILE,
-      icon: <IdcardOutlined style={mainIconStyle} />,
-    },
+    // {
+    //   name: 'Profile',
+    //   path: routes.PROFILE,
+    //   icon: <IdcardOutlined style={mainIconStyle} />,
+    // },
     {
       name: 'User',
       path: routes.USER,
