@@ -120,11 +120,11 @@ import { AnyComponent } from 'styled-components/dist/types';
   const menuItems: MenuItem[] = [
     // { name: 'Dashboard', path: routes.ROOT, icon: <DashboardOutlined style={mainIconStyle} /> },
     
-    // {
-    //   name: 'Profile',
-    //   path: routes.PROFILE,
-    //   icon: <IdcardOutlined style={mainIconStyle} />,
-    // },
+    {
+      name: 'Profile',
+      path: routes.PROFILE,
+      icon: <IdcardOutlined style={mainIconStyle} />,
+    },
     {
       name: 'User',
       path: routes.USER,
@@ -140,7 +140,7 @@ import { AnyComponent } from 'styled-components/dist/types';
     //   const [{user}] = useSelector((state:any)=>[state.authUser])
     const { theme: currentTheme } = useContext(ThemeContext);
     const [openSubMenu, setOpenSubMenu] = useState<number | null>(null);
-    const [selectedTab, setSelectedTab] = useState<TABS | SUBTABS>('User');
+    const [selectedTab, setSelectedTab] = useState<TABS | SUBTABS>('Profile');
     const isMobile = useMediaQuery('(max-width: 600px)');
     const location = useLocation();
     const { pathname } = location;

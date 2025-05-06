@@ -55,6 +55,48 @@ const CustomerTextField: React.FC<CreateUserProps> = ({ handleClose, updateUserD
     email:'',
   });
   const fetchFormFields =async ()=>{
+    setformFields([ {
+      "id": "1",
+      "fieldName": "firstName",
+      "fieldType": "string",
+      "condition": "required",
+      "status": "display"
+    },
+    {
+      "id": "2",
+      "fieldName": "lastName",
+      "fieldType": "string",
+      "condition": "required",
+      "status": "display"
+    },
+    {
+      "id": "3",
+      "fieldName": "phoneNumber",
+      "fieldType": "number",
+      "condition": "required",
+      "status": "display"
+    },
+    {
+      "id": "4",
+      "fieldName": "email",
+      "fieldType": "string",
+      "condition": "required",
+      "status": "display"
+    },
+    {
+      "id": "5",
+      "fieldName": "DateOfBirth",
+      "fieldType": "string",
+      "condition": "required",
+      "status": "hide"
+    },
+    {
+      "id": "6",
+      "fieldName": "Address",
+      "fieldType": "string",
+      "condition": "required",
+      "status": "hide"
+    }])
     const response: any = await getFormFields({});
     console.log(response);
     let formfieldss=response?.data;

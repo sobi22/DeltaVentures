@@ -40,7 +40,35 @@ const Users=()=>{
   },[paginationModel,selectedId])
 
   const fetchData = async (page: number, size: number) => {
-    // setRowsFilterBySearch([]);
+    setRows([
+      {
+        "id": "1",
+        "firstName": "Sobi",
+        "lastName": "CV",
+        "email": "sobi@gmail.com",
+        "phoneNumber": 9567777777
+      },
+      {
+        "id": "f72d",
+        "firstName": "SobiTT",
+        "lastName": "C",
+        "email": "sobi@gmail.com",
+        "phoneNumber": 9567777777
+      },
+      {
+        "id": "678a",
+        "phoneNumber": "6678956789",
+        "email": "bbb@gmail.com",
+        "firstName": "hdhj",
+        "lastName": "fj"
+      },
+      {
+        "id": "6e2f",
+        "firstName": "Alwin",
+        "lastName": "Y",
+        "phoneNumber": "5678345679",
+        "email": "csss@gmail.com"
+      }])
     const response: any = await getDataFromUser({ page, size, searchByName: "" });
     console.log(response);
     if ('data' in response) {
